@@ -256,7 +256,7 @@
 //	if (input == 1)
 //		printf("恭喜你，你是天才\n");
 //	else
-//		printf("很抱歉，你是傻逼\n");
+//		printf("很抱歉，你是失败了\n");
 //	return 0;
 //}
 // 
