@@ -908,3 +908,15 @@
 //	judge(arr, target, sz);
 //	return 0;
 //}
+
+
+
+
+
+int main()
+{
+	float a = 3.5;
+	printf("%d", (int)a);
+
+
+}
