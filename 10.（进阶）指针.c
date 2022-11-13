@@ -835,29 +835,53 @@
 
 //////简单来说就是(函数1)传参时，传了一个(函数指针2)作为参数，之后在(函数1)中使用符合(函数指针2)格式的一系列函数
 
+//////使用场景：如qsort函数，想在一个函数内部实现多种类型的数组元素排序，总体排序方式相同，但是不同类型数组元素比较方式不同，
+//////          这时使用回调函数，将[不同数组对应的比较函数的指针]作为参数传入qsort函数，
+//////          就可做到在一个函数中对[不同的比较方式]用[同一套排序体系]进行多种类型的排序功能。
+//////
+///////////////简单来说，就是把原本要写好几次的东西封装到一个函数中，避免成分冗余
+
 
 
 
 
 
 //////////     以下为回调函数简单的例子： 函数也可以调用函数
-////////// f2实参为f1的函数名，形参是f1对应的函数指针及其类型，这样可以在f2内使用f1
-////////// f1实参是字符串，形参是字符串
+//////////     F是每种情况都要进行的相同叙述，f1,f1是选择每种情况的不同结果
+//////////     把相同的叙述用统一封装在F中，在F内调用f1,f2来对结果区别化
+//////////     若无F，相同的话要在每种情况下都写多次，造成冗余 
 //
-//void f1(char* str)//打印字符串的函数
+//void f1()//打印字符串的函数
 //{
-//	printf("%s\n", str);
+//	printf("(￣▽￣)\n");
+//}
+//void f2()//打印字符串的函数
+//{
+//	printf("O(∩_∩)O\n");
 //}
 //
-//void f2(void(*f)(char*))//打印hehe并调用f1的函数
+//void F(void (*f)())//写这个函数可以避免在case中反复写某种情况都需要的文字描述一类的东西，避免成分冗余
 //{
-//	printf("hehe\n");
-//	f("haha");
+//	printf("这里是很多的文字描述\n");
+//	printf("......\n");
+//	printf("你打印的结果是：\n");
+//	f();
 //}
 //
 //int main()
 //{
-//	f2(f1);
+//	printf("1.(￣▽￣) ，2.O(∩_∩)O ");
+//	printf("选择你要打印的字符串\n");
+//	int a;
+//	scanf("%d", &a);
+//	switch (a)
+//	{
+//	case 1:
+//		F(f1);
+//		break;
+//	case 2:
+//		F(f2);
+//	}
 //	return 0;
 //}
 
@@ -893,7 +917,7 @@
 //	int a, b;
 //	printf("请输入两个操作数：> ");
 //	scanf("%d%d", &a, &b);
-//	printf("值为 %d", pf(a, b));
+//	printf("值为 %d", pf(a, b));//这里在一个F函数中用一个函数指针pf调用了多种类型的计算函数
 //}
 //int main()
 //{
@@ -935,8 +959,151 @@
 
 
 
-//////////////////////     冒泡函数（只能排整型类的数据，不通用）
+
+
+
+
+//////////指针类型 void*
+// 
+////void* 可以接收任意类型的地址：(垃圾桶)，任何地址都可以往里仍
+////任何类型指针直接赋到void*中都不会报错
 //
+////指针类型决定[1.其解引用能访问的字节数]和[2.指针加减整数的跨度]
+// 
+////void* 类型的指针：（1）不能解引用（无具体类型，访问几字节不确定）
+////void* 类型的指针：（2）不能加减整数（无具体类型，不知道跨度）
+
+
+
+
+
+
+
+
+
+////////////////////////     库函数 - qsort（quick sort - 快速排序），对应<stdlib.h>
+//
+//#include<stdlib.h>
+//
+//////////库函数qsort的声明，具体见MSDN
+//////////void qsort(void* base,//待排序数组的首元素地址（base:起始位置，基点）
+//////////	       size_t num, //待排序数组元素个数
+//////////	       size_t width,//待排序数组的每个元素的大小（字节数）（sizeof()）
+//////////	       int(* compare)(const void* elem1, const void* elem2)//是函数指针，比较两个元素所用函数的地址
+//////////           );//（传入不同类型数组，对应的比较方式也不同，故该函数由使用者自己实现）
+//
+//
+//////////  
+//////////  比较函数compare在MSDN中的说法
+//////////  int(* compare)(const void* elem1, const void* elem2);//#注意，这里void*可以接收任意类型的地址#//
+//////////  该函数必须比较元素，然后返回以下值之一:
+//////////
+//////////   Return Value     Description（条件）
+//////////     < 0           （elem1 less than elem2）
+//////////	   0           （elem1 equivalent to elem2）
+//////////     > 0           （elem1 greater than elem2）
+////////// 
+//////////  也就是e1<e2,返回负数；e1=e2，返回0；e1>e2，返回整数
+//
+//
+//
+//
+//
+////这个比较函数的类型 要符合qsort声明中 函数指针的类型
+//int cmp_int(const void* e1, const void* e2)//两个比较元素的指针；
+//{  
+//	//void*类型指针无法解引用，要强制类型转换
+//	return *(int*)e1 - *(int*)e2;
+//}
+//
+//void test_int()//测试整形数组的qsort使用
+//{
+//	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	qsort(arr, sz, sizeof(arr[0]), cmp_int);//库函数qsort的使用
+//	//（数组名,元素个数,元素字节数,对应类型的比较函数(由使用者自己编写)）
+//	int i = 0;
+//	for (i = 0; i < sz; i++) {
+//		printf("%d ", arr[i]);
+//	}
+//	printf("\n");
+//}
+//
+//
+//
+//int cmp_float(const void* e1, const void* e2)
+//{
+//	////// *(float*)e1 - *(float*)e2 对于浮点数不能用，
+//	//////因为该函数返回值int,相减得到-1和1之间的数全变为0
+//	if (*(float*)e1 < *(float*)e2)
+//		return -1;
+//	else if (*(float*)e1 == *(float*)e2)
+//		return 0;
+//	else
+//		return 1;
+//}
+//
+//void test_float() // 测试浮点型数组的qsort使用
+//{
+//	float f[] = { 6.0, 5.0, 4.0, 3.0 ,2.0, 1.0 };
+//	int sz = sizeof(f) / sizeof(f[0]);
+//	qsort(f, sz, sizeof(f[0]), cmp_float);
+//	int i = 0;
+//	for (i = 0; i < sz; i++) {
+//		printf("%f ", f[i]);
+//	}
+//	printf("\n");
+//}
+//
+//
+//
+//struct stu//创建结构体变量
+//{
+//	char name[20];
+//	int age;
+//};
+//
+//int cmp_str_age(const void* e1, const void* e2)//这里参数为结构体指针
+//{
+//	return ((struct stu*)e1)->age - ((struct stu*)e2)->age;//注意优先级问题加括号
+//}
+//
+//void test_str()//测试结构体数组的qsort使用
+//{
+//	struct stu S[] = { {"张三",56},{"李四",28},{"王五",18} }; 
+//	int sz = sizeof(S) / sizeof(S[0]);
+//	qsort(S, sz, sizeof(S[0]), cmp_str_age);
+//	int i = 0;
+//	for (i = 0; i < sz; i++) {
+//		printf("%s(%d)  ", S[i].name,S[i].age);
+//	}
+//	printf("\n");
+//}
+//
+//
+//
+//int main()
+//{
+//	test_int();
+//	test_float();
+//	test_str();
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////      冒泡函数（只能排整型类的数据，不通用）
+////在这里回忆前面学过的：冒泡函数
+// 
 //void bubble_sort(int arr[], int sz)
 //{
 //	int i, j;
@@ -967,145 +1134,133 @@
 
 
 
-//////////指针类型 void*
-////void* 可以接收任意类型的地址：(垃圾桶)，任何地址都可以往里仍
-////指针类型决定[1.其解引用能访问的字节数]和[2.指针加减整数的跨度]
-//// 
-////void* 类型的指针：（1）不能解引用（无具体类型，访问几字节不确定）
-////void* 类型的指针：（2）不能加减整数（无具体类型，不知道跨度）
+
+
+
+
+
+////////////////////////////      自己实现 qsort函数
+////// 
+//////void qsort(void* base,
+//////	       size_t num, 
+//////	       size_t width,
+//////	       int(* compare)(const void* elem1, const void* elem2)//相邻数组元素地址；
+//////           );
+//////                          不管是void* e1,int* e1,char* e1，指针类型不同，可操作字节数不同；但是值都相同，是元素第一个字节的地址
+////// 
+//////  
+//////其中，qsort(  arr,     sz,   sizeof(arr[0]),  cmp_int);//库函数qsort的使用
+//////	      （数组名, 元素个数,  元素字节数,    比较函数）
+//
+//
+//
+//
+//
+//void swap(char* e1, char* e2,int width)//用于交换两元素的函数
+//{                                 //（只要给出元素字节大小width，就可交换任意类型的元素）
+//	int i;
+//	for (i = 0; i < width; i++)//逐字节交换
+//	{
+//		char tmp = *(e1 + i);
+//		*(e1 + i) = *(e2 + i);
+//		*(e2 + i) = tmp;
+//	}
+//}
+//
+//
+//////函数my_sqrt和sqrt一样，从小到大排序；my_sqrt思路类比冒泡函数
+//////
+//////  #任何指针都可不强制类型转换，[直接]传到void*中，不报错；
+//////  #因为数组数组指针类型void*，无法确定类型，所以传递参数width，来确定每个元素的字节数
+//void my_qsort(void* arr, int sz, int width, int(*cmp)(const void* e1, const void* e2)) //cmp的返回结果>0，说明前一个元素大于后一个
+//{
+//	int i, j; 
+//	for (i = 0; i < sz - 1; i++)//趟数
+//	{
+//		for (j = 0; j < sz - i - 1; j++)//每趟交换的次数
+//		{
+//			if (cmp(((char*)arr + j * width), ((char*)arr + (j + 1) * width)) > 0) //------------------------------------不管是void* e1, int* e1, char* e1，指针类型不同，可操作字节数不同；但是值都相同，是元素第一个字节的地址
+//				     //这里arr是空指针，若想表示其对应类型的arr[j],arr[j+1]，需要利用传来的数组元素宽度width(字节数)
+//				     //先(char*)arr，让arr加减整数都以一字节为跨度单位
+//				     //这样(char*)arr加减width的倍数，就可以对应到所需数组元素的地址
+//			{
+//				//交换
+//				swap(((char*)arr + j * width), ((char*)arr + (j + 1) * width),width);
+//			}
+//		}
+//	}
+//}
+//
+//
+//
+//int cmp_int(const void* e1, const void* e2)//整形数组的比较函数
+//{
+//	return *(int*)e1 - *(int*)e2;
+//}
+//
+//
+//int cmp_float(const void* e1, const void* e2)//浮点型数组的比较函数
+//{
+//	if (*(float*)e1 > *(float*)e2) {
+//		return 1;
+//	}
+//	else if (*(float*)e1 = *(float*)e2) {
+//		return 0;
+//	}
+//	else {
+//		return -1;
+//	}
+//}
+//
+//
+//typedef struct stu //定义结构体
+//{
+//	char name[20];
+//	int age;
+//	char sex[5];
+//}Stu;
+//
+//int cmp_Stu(const void* e1, const void* e2)//结构体数组中int age的比较函数
+//{
+//	return ((struct stu*)e1)->age - ((struct stu*)e2)->age;
+//}
+//
+//
+//
+//int main()///////////////////////////////////主函数/////////////////////////////////////////
+//{
+//	int arr[] = { 9,8,7,6,5,4,3,2,1,0 };//交换整形数组
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	my_qsort(arr, sz, sizeof(arr[0]), cmp_int);
+//	int i;
+//	for (i = 0; i < sz; i++){
+//		printf("%d ", arr[i]);
+//	}
+//	printf("\n");
+//
+//
+//	float farr[] = { 9.0,7.0,5.0,3.0,1.0 };
+//	int fsz = sizeof(farr) / sizeof(farr[0]);
+//	my_qsort(farr, fsz, sizeof(farr[0]), cmp_float);
+//	for (i = 0; i < fsz; i++) {
+//		printf("%f ", farr[i]);
+//	}
+//	printf("\n");
+//
+//
+//	Stu Sarr[] = { {"张三",67,"男"},{"李四",36,"女"},{"大壮",24,"男"},{"桃子",49 ,"女"} };
+//	int Ssz = sizeof(Sarr) / sizeof(Sarr[0]);
+//	my_qsort(Sarr, Ssz, sizeof(Sarr[0]), cmp_Stu);
+//	for (i = 0; i < Ssz; i++) {
+//		printf("{%s-%d-%s} ",Sarr[i].name,Sarr[i].age,Sarr[i].sex);
+//	}
+//	printf("\n");
+//
+//	return 0;
+//}////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 
 
-
-
-
-//////////////////////     库函数 - qsort（quick sort - 快速排序），对应<stdlib.h>
-
-#include<stdlib.h>
-
-////////库函数qsort的声明，具体见MSDN
-////////void qsort(void* base,//数组名
-////////	       size_t num, //数组元素个数
-////////	       size_t width,//数组元素字节数（sizeof()）
-////////	       int(* compare)(const void* elem1, const void* elem2)//比较函数，该函数参数为数组元素
-////////           );//（传入不同类型数组，对应的的比较方式不同，要自己写比较函数）
-
-
-////////  
-////////  比较函数compare在MSDN中的说法
-////////  int(* compare)(const void* elem1, const void* elem2);//#注意，这里void*可以接收任意类型的地址#//
-////////  该函数必须比较元素，然后返回以下值之一:
-////////
-////////   Return Value     Description（条件）
-////////     < 0          （elem1 less than elem2）
-////////	     0          （elem1 equivalent to elem2）
-////////     > 0          （elem1 greater than elem2）
-//////// 
-////////  也就是e1<e2,返回负数；e1=e2，返回0；e1>e2，返回整数
-
-
-
-
-
-//这个比较函数的类型 要符合qsort声明中 函数指针的类型
-int cmp_int(const void* e1, const void* e2)//两个比较元素的指针；
-{  
-	//void*类型指针无法解引用，要强制类型转换
-	return *(int*)e1 - *(int*)e2;
-}
-
-void test_int()//测试整形数组的qsort使用
-{
-	int arr[10] = { 9,8,7,6,5,4,3,2,1,0 };
-	int sz = sizeof(arr) / sizeof(arr[0]);
-	qsort(arr, sz, sizeof(arr[0]), cmp_int);//库函数qsort的使用
-	//（数组名,元素个数,元素字节数,对应类型的比较函数(由使用者自己编写)）
-	int i = 0;
-	for (i = 0; i < sz; i++) {
-		printf("%d ", arr[i]);
-	}
-	printf("\n");
-}
-
-
-
-int cmp_float(const void* e1, const void* e2)
-{
-	////// *(float*)e1 - *(float*)e2 对于浮点数不能用，
-	//////因为该函数返回值int,相减得到-1和1之间的数全变为0
-	if (*(float*)e1 < *(float*)e2)
-		return -1;
-	else if (*(float*)e1 == *(float*)e2)
-		return 0;
-	else
-		return 1;
-}
-
-void test_float() // 测试浮点型数组的qsort使用
-{
-	float f[] = { 6.0, 5.0, 4.0, 3.0 ,2.0, 1.0 };
-	int sz = sizeof(f) / sizeof(f[0]);
-	qsort(f, sz, sizeof(f[0]), cmp_float);
-	int i = 0;
-	for (i = 0; i < sz; i++) {
-		printf("%f ", f[i]);
-	}
-	printf("\n");
-}
-
-
-
-struct stu//创建结构体变量
-{
-	char name[20];
-	int age;
-};
-
-int cmp_str_age(const void* e1, const void* e2)//这里参数为结构体指针
-{
-	return ((struct stu*)e1)->age - ((struct stu*)e2)->age;//注意优先级问题加括号
-}
-
-void test_str()//测试结构体数组的qsort使用
-{
-	struct stu S[] = { {"张三",56},{"李四",28},{"王五",18} }; 
-	int sz = sizeof(S) / sizeof(S[0]);
-	qsort(S, sz, sizeof(S[0]), cmp_str_age);
-	int i = 0;
-	for (i = 0; i < sz; i++) {
-		printf("%s(%d)  ", S[i].name,S[i].age);
-	}
-	printf("\n");
-}
-
-
-
-
-int main()
-{
-	test_int();
-	test_float();
-	test_str();
-	return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////9.指针和数组面试题的解析
