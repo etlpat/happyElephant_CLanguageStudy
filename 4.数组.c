@@ -431,8 +431,16 @@
 // 
 // 
 ////////////////gets输入字符串
-////gets(arr) 或者 gets(&arr) 相同
+////gets(arr) 或者 gets(&arr) 相同 
 //// 头文件：#include <stdio.h>
 //// 该函数的声明：char* gets(char* str);
 // 
 //// scanf传参时直接传char*类型的地址，一般为字符串的首元素地址（数组名）
+
+
+
+
+
+
+
+
