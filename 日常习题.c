@@ -1370,7 +1370,7 @@
 
 
 
-
+////////////////问会输出什么？
 //int main()
 //{
 //	char arr1[] = "hello";
@@ -1387,6 +1387,7 @@
 //	}
 //	return 0;
 //}
+
 
 
 
@@ -1438,4 +1439,454 @@
 ////		}
 ////	}
 ////	return 0;
+////}
+
+
+
+
+
+
+
+
+
+//////////////////请问输出结果是什么
+//int main()
+//{
+//	int a[5] = { 5,4,3,2,1 };
+//	int* ptr = (int*)(&a + 1);
+//	printf("%d,%d", *(a + 1), *(ptr - 1));//4,1
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+////////////实现一个函数，可以左旋字符串中k个字符
+////////例如：abcd左旋一个字符得到bcda
+////////      abcd左旋两个字符得到cdab
+//#include<string.h>
+//#include<assert.h>
+//
+//void f1(char arr[],int num)//数组，交换字符个数   
+//{
+//	int a;
+//	for (a = 0; a < num; a++)//交换几个字符
+//	{
+//		int i;
+//		for (i = 0; i < strlen(arr)-1; i++)//循环操作把第一个交换到最后一个
+//		{
+//			char tmp = arr[i];
+//			arr[i] = arr[i + 1];
+//			arr[i + 1] = tmp;
+//		}
+//	}
+//}
+//
+////挑战用递归实现该函数
+//void f2(char arr[], int num)//左旋mun个字符的函数
+//{
+//	if (num > 0) {
+//		int i;
+//		for (i = 0; i < strlen(arr)-1; i++)//循环操作把第一个交换到最后一个
+//		{
+//			char tmp = arr[i];
+//			arr[i] = arr[i + 1];
+//			arr[i + 1] = tmp;
+//		}
+//		f(arr, num - 1);
+//	}
+//}
+//
+//
+/////////三步转换法
+////// abcdef
+////// ba fedc //将想num前后字符串各自翻转
+////// cdefba  //再将整体字符串反转
+//
+//void reverse(char* left, char* right)
+//{
+//	while (left < right)
+//	{
+//		char tmp = *left;
+//		*left = *right;
+//		*right = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//
+//void f3(char* arr, int num)
+//{
+//	assert(arr);
+//	assert(num < strlen(arr));
+//	reverse(arr, arr + num - 1);//先逆序想左旋的num个字符串
+//	reverse(arr + num, arr + strlen(arr) - 1);//再逆序剩下的字符串
+//	reverse(arr, arr + strlen(arr) - 1);//将逆序的结果整体逆序
+//}
+//
+//int main()
+//{
+//	char arr[] = "abcdef";
+//	f3(arr, 3);
+//	printf("%s", arr);
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////给定一个字符串2是否是由字符串1旋转的得到的。
+//////////如果是请输出：“是旋转得来的。” ；不是请输出：“不是旋转得来的。”
+//////////例：
+//////////字符串1：ABCDEFG
+//////////字符串2：EFGABCD
+//////////字符串2 是否是由 字符串1 旋转得到的。（旋转即为上一个字符串左旋或右旋n个后的结果）
+//////////结果：是旋转得来的。
+//#include<string.h>
+//#include<assert.h>
+//#define MAX 20
+//
+//
+//
+////////1.遍历法
+////int cmp(char* ch1, char* ch2)//比较字符串的函数
+////{
+////	int a = 1;
+////	while (*ch1)
+////	{
+////		if (*ch1 != *ch2) {
+////			a = 0;
+////			break;
+////		}
+////		ch1++;
+////		ch2++;
+////	}
+////	return a;
+////}
+////
+////void reverse(char* left, char* right)
+////{
+////	while (left < right)
+////	{
+////		char tmp = *left;
+////		*left = *right;
+////		*right = tmp;
+////		left++;
+////		right--;
+////	}
+////}
+////
+////void f(char* ch, int num)//左旋n个字符的函数
+////{
+////	assert(ch);
+////	assert(num <= strlen(ch));
+////	reverse(ch, ch + num - 1);
+////	reverse(ch + num , ch + strlen(ch)-1);
+////	reverse(ch, ch + strlen(ch)-1);
+////}
+////
+////int judge(char* ch1, char* ch2)
+////{
+////	if (strlen(ch1) != strlen(ch2))
+////	{
+////		printf("不是旋转得来的\n");
+////		return 0;
+////	}
+////		int i,a=0;
+////	for (i = 0; i < strlen(ch1); i++)//左旋i次,每次旋转1个字符
+////	{
+////		f(ch1, 1);
+////		if (1 == cmp(ch1, ch2))//比较两字符串是否相等
+////		{
+////			printf("是旋转得来的\n");
+////			return 1;
+////		}
+////	}
+////		printf("不是旋转得来的\n");
+////		return 0;
+////}
+////
+////int main()
+////{
+////	char ch1[MAX];
+////	char ch2[MAX];
+////	gets(ch1);
+////	gets(ch2);
+////	judge(ch1, ch2);
+////	return 0;
+////}
+//
+// 
+// 
+//
+////////2.追加法(自己实现追加)
+////
+////int cmp(char* arr, char* ch,int len)//计较函数，若arr内包含ch，返回1，否则返回0
+////{
+////	int i, j;
+////	for (i = 0; i < len+1; i++)
+////	{
+////		int a = 1;
+////		for (j = 0; j < len; j++)
+////		{
+////			if (*(arr + i + j) != *(ch + j)){
+////				a = 0;
+////				break;
+////			}
+////		}
+////		if (a == 1) {
+////			return 1;
+////		}
+////	}
+////	return 0;
+////}
+////
+////int judge(char* ch1, char* ch2)
+////{
+////	assert(ch1);
+////	assert(ch2);
+////	if (strlen(ch1) != strlen(ch2)) {
+////		printf("不是旋转得来的\n");
+////		return 0;
+////	}
+////	int len = strlen(ch2);
+////
+////
+////	char arr[2 * MAX] = { 0 };
+////	int i, j;
+////	for (i = 0,j = 0; i < 2 * len; i++, j++)
+////	{
+////		if (j == len) {
+////			j = 0;
+////		}
+////			*(arr + i) = *(ch1 + j);
+////	}
+////	*(arr + 2 * len) == '\0';
+////	
+////
+////	if (1 == cmp(arr, ch2, len)){
+////		printf("是旋转得来的\n");
+////	}
+////	else {
+////		printf("不是旋转得来的\n");
+////	}
+////}
+////
+////int main()
+////{
+////	char ch1[MAX];
+////	char ch2[MAX];
+////	gets(ch1);
+////	gets(ch2);
+////	judge(ch1, ch2);
+////	return 0;
+////}
+//
+//
+//
+//
+//////////////////////////////////库函数知识点补充
+//
+//////// strcat （追加字符串）
+//////// char *strcat( char *strDestination, const char *strSource );
+//////// 
+////////int main()//这样把arr2追加到arr1后面，arr1内容变成abcdef
+////////{
+////////	char arr1[30] = "abc";
+////////	char arr2[] = "def";
+////////	strcat(arr1, arr2);//----------------strcat(被追加的字符串,追加的字符串)；但是不可以自己追加自己
+////////	printf("%s\n", arr1);//abcdef
+////////}
+////////
+//////// 自己给自己追加，程序会崩溃，原因是strcat会把要 arr2从首字符开始，倒\0为止，追加到 arr1后边，其中arr2 的首字符会代替arr1的\0；
+//////// 若是自己追加到自己后面，自己的首字符会先覆盖掉自己的\0，导致无法停止，程序崩溃
+//
+//
+//////// strncat (追加字符串)
+//////// char *strncat( char *strDest, const char *strSource, size_t count );
+//////// 因为参数中有具体追加个数，所以不用管\0的问题，可以自己追加自己
+//
+//////// strstr （在字符串中找它的子字符串）函数
+//////// char *strstr( const char *string, const char *strCharSet );
+//////// 如果子字符串存在，则返回其在母字符串中对应的首字符地址；否则返回NULL
+//
+//
+//
+//
+//////// 3.追加法（库函数实现）//笔试时，能用库函数就用库函数
+////#include<string.h>
+////int is_left_move(char* str1, char* str2)//判断是否为旋转的来的函数
+////{
+////	int len1 = strlen(str1);
+////	int len2 = strlen(str2);
+////	if (len1 != len2) {
+////		return 0;
+////	}
+////
+////	//1.在str1字符串后面追加一个str1,用strncat，不能用strcat
+////	strncat(str1, str1, len1);
+////
+////	//2.判断str2是否为str1的子字符串，用strstr，找子串库函数
+////	char* ret = strstr(str1, str2);
+////	if (ret == NULL) {
+////		return 0;
+////	}
+////	else {
+////		return 1;
+////	}
+////}
+////
+////int main()
+////{
+////	char ch1[MAX];
+////	char ch2[MAX];
+////	gets(ch1);
+////	gets(ch2);
+////	
+////	int ret = is_left_move(ch1, ch2);
+////	if (ret == 1) {
+////		printf("是旋转得来的\n");
+////	}
+////	else {
+////		printf("不是旋转得来的\n");
+////	}
+////	return 0;
+////}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////杨氏矩阵
+//////有一个数字矩阵，矩阵的每行从左到右，从上到下是递增的，请编写程序在这样的矩阵中找到某个数字是否存在
+//////要求：时间复杂度小于o(N)//若是数组有N个元素，最坏的情况是寻找N次，时间复杂度就是o(N)
+//////所以说不能用遍历法
+//
+//
+//////法1：普通法
+////int search_hang(int* arr,int a)
+////{
+////	int left = 0;
+////	int right = 4;
+////	while (left <= right)//二分查找，注意有的情况右==左
+////	{
+////		int mid = (left + right) / 2;
+////		if (arr[mid] < a) {
+////			left = mid + 1;
+////		}
+////		if (arr[mid] > a) {
+////			right = mid - 1;
+////		}
+////		if (arr[mid] == a) {
+////			return 1;
+////		}
+////	}
+////	return 0;
+////}
+////
+////int search(int arr[][5], int a)
+////{
+////	if(arr[0][0] > a || arr[4][4] < a) {
+////		return 0;
+////	}
+////	int high = 0;
+////	while (high<=4)//从↗一行一行往下找
+////	{
+////		if (arr[high][4] >= a) {
+////			return search_hang(arr[high],a);
+////		}
+////		high++;
+////	}
+////	return 0;
+////}
+////
+////int main()
+////{
+////	int arr[5][5] = { {1,2,3,4,5},{4 ,5 ,6 ,7 ,8},{7 ,8 ,9 ,10,11},{9 ,10,11,12,13},{11,12,13,14,15} };
+////	// 1 ,2 ,3 ,4 ,5
+////	// 4 ,5 ,6 ,7 ,8
+////	// 7 ,8 ,9 ,10,11
+////	// 9 ,10,11,12,13
+////	// 11,12,13,14,15
+////	int a;
+////	scanf("%d", & a);
+////	int t =search(arr, a);
+////	if (t == 1) {
+////		printf("有");
+////	}
+////	else {
+////		printf("没有");
+////	}
+////
+////}
+//
+//
+//
+//
+//
+//
+////////法2（一次循环去掉一行或一列，从右上角从左上角寻找的方法）
+////
+////int search(int arr[][5], int a, int hang, int lie)
+////{
+////	int x = 0;
+////	int y = lie;
+////	////int arr[x][y]是右上角元素坐标
+////
+////	while (x <= hang && y >= 0)//从右上角从左下角收缩范围
+////	{
+////		if (arr[x][y] > a) {
+////			y--;
+////		}
+////		else if (arr[x][y] < a) {
+////			x++;
+////		}
+////		else if (arr[x][y] == a) {
+////			return 1;
+////		}
+////	}
+////	return 0;
+////}
+////
+////int main()
+////{
+////	int arr[5][5] = { {1,2,3,4,5},{4 ,5 ,6 ,7 ,8},{7 ,8 ,9 ,10,11},{9 ,10,11,12,13},{11,12,13,14,15} };
+////	int a;
+////	scanf("%d", &a);
+////	// 1 ,2 ,3 ,4 ,5
+////	// 4 ,5 ,6 ,7 ,8
+////	// 7 ,8 ,9 ,10,11
+////	// 9 ,10,11,12,13
+////	// 11,12,13,14,15
+////	int t = search(arr, a, 4, 4);
+////	if (t == 1) {
+////		printf("有");
+////	}
+////	else {
+////		printf("没有");
+////	}
 ////}
