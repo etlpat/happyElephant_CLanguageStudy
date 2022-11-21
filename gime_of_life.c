@@ -149,8 +149,8 @@ int player(int* num, int* sleepTime, int* speed)
 		printf("\n倍速：×2.00\n");
 		break;
 	}
-	printf("第%d代                    \n", *num);
-	printf("按键：1减速 ；2加速 ；3暂停 ；4退出\n");
+	printf("第%d代                            \n", *num);
+	printf("按键:1减速;2加速;3暂停;4退出\n");
 	return 0;
 }
 
@@ -192,6 +192,5 @@ int main()
 			break;
 		}
 		Sleep(sleepTime);
-
 	}
 }
