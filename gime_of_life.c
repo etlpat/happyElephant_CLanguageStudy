@@ -12,8 +12,10 @@
 #include<stdlib.h>
 #include<time.h>
 #include<Windows.h>
-#define WIDTH 52   //WIDTH   x  j
-#define HEIGHT 27  //HEIGHT  y  i
+#include<conio.h>
+
+#define WIDTH 57   //WIDTH   x  j
+#define HEIGHT 25  //HEIGHT  y  i
 //map[HEIGHT][WIDTH]   map[i][j]   map[y][x]
 
 
@@ -100,6 +102,58 @@ void update_map()
 }
 
 
+int player(int* num, int* sleepTime, int* speed)
+{
+	while (_kbhit())
+	{
+		switch (_getch())//0<=speed<=4
+		{
+		case '1':
+			if ((*speed) > 0)
+			{
+				(*sleepTime) += 50;
+				(*speed)--;
+			}
+			break;
+		case '2':
+			if ((*speed) < 4)
+			{
+				(*sleepTime) -= 50;
+				(*speed)++;
+			}
+			break;
+		case '3':
+			system("pause");
+			break;
+		case '4':
+			return 1;
+		}
+	}
+
+	////打印玩家提示
+	switch (*speed)
+	{
+	case 0:
+		printf("\n倍速：×0.25\n");
+		break;
+	case 1:
+		printf("\n倍速：×0.50\n");
+		break;
+	case 2:
+		printf("\n倍速：×1.00\n");
+		break;
+	case 3:
+		printf("\n倍速：×1.50\n");
+		break;
+	case 4:
+		printf("\n倍速：×2.00\n");
+		break;
+	}
+	printf("第%d代                    \n", *num);
+	printf("按键：1减速 ；2加速 ；3暂停 ；4退出\n");
+	return 0;
+}
+
 
 int main()
 {
@@ -118,6 +172,9 @@ int main()
 	//初始化地图(在地图上随机生成%50的生命)
 	init_map();
 
+	int num = 0;
+	int sleepTime = 100;
+	int speed = 2;
 	while (1)
 	{
 		////光标移动到最开始的地方（？）
@@ -127,8 +184,14 @@ int main()
 		print_map(map);
 		////计算地图
 		update_map(map);
-		////getchar();
-		Sleep(100);
+		num++;
+
+		////玩家进行操纵
+		int t = player(&num, &sleepTime, &speed);
+		if (t) {
+			break;
+		}
+		Sleep(sleepTime);
+
 	}
-	return 0;
 }
