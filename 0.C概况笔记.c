@@ -1,4 +1,8 @@
-//
+//#define _CRT_SECURE_NO_WARNINGS 1
+// 
+// 
+// 
+// 
 //c代码
 //.c源文件
 //.h头文件  h = head
@@ -839,7 +843,7 @@
 
 
 ///////////////                  本质是：如果表达式结果为真（非0），则语句执行
-#include<stdio.h>
+//#include<stdio.h>
 //int main()
 //{
 //	int age;
