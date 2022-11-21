@@ -157,16 +157,17 @@ int player(int* num, int* sleepTime, int* speed)
 
 int main()
 {
-	////获取句柄等操作
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);//获取标准输出的句柄
-	COORD zero = { 0,0 };//设置初始坐标
+	//AAAAA// 获取句柄、初始坐标等操作
+	//// HANDLE 句柄：数值上，是一个32位无符号整型值；理解上，是Windows每次运行中各个对象的一个唯一的、固定不变的ID；作用上，Windows使用句柄来标识诸如窗口、位图、画笔等对象，并通过句柄找到这些对象。
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);//获取标准输句柄(标准_输出_句柄)
+	COORD zero = { 0,0 };//设置初始坐标 //COORD是结构体，里面存放X、Y坐标
 
 
-	////隐藏光标
-	CONSOLE_CURSOR_INFO cci;//获取光标位置
-	cci.dwSize = sizeof(cci);//告诉光标的大小
-	cci.bVisible = FALSE;//告诉光标是看不见的
-	SetConsoleCursorInfo(handle, &cci);
+	//BBBBB// 通过设置光标属性---来隐藏光标的操作
+	CONSOLE_CURSOR_INFO cci;//控制台_光标_信息(这是一个结构体类型名称，成员包含 dwSize 和 bVisible )
+	cci.dwSize = sizeof(cci);//指定光标的大小（指示光标填充的字符单元格的百分比）
+	cci.bVisible = FALSE;//指定游标的可见性（如果游标是可见的，则该成员为TRUE(1)，游标不可见，则成员为FALSE(0)）
+	SetConsoleCursorInfo(handle, &cci);//设置_控制台_游标_信息（）
 
 
 	//初始化地图(在地图上随机生成%50的生命)
@@ -177,8 +178,8 @@ int main()
 	int speed = 2;
 	while (1)
 	{
-		////光标移动到最开始的地方（？）
-		SetConsoleCursorPosition(handle, zero);//设置 命令行窗口 光标 位置
+		//AAAAA// 通过设置光标位置---把光标移动到最开始的地方
+		SetConsoleCursorPosition(handle, zero);//设置_控制台_游标_位置
 
 		////打印地图
 		print_map(map);
