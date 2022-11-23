@@ -3,6 +3,7 @@
 #include<string.h>
 
 
+
 ////求字符串长度
 //strlen()
 ////长度不受限制的字符串函数
@@ -30,9 +31,21 @@
 
 
 
+//////几个<string.h>下的库函数的相似点：
+//////////1.函数参数均为char*类型，传参传首地址
+//////////2.参数(char *strDestination, const char *strSource)，左目标字符串，右源字符串
+//////////3.若函数不改变某数组内容，对应参数加const
+//////////4.库函数中count类型均为size_t无符号整形，因为不可能为负
+//////////5.自己实现库函数时，assert()断言不是空指针
+//////////6.限制长度的字符串函数，函数名中间加n，参数比之前多一个num，即想要操作的字符个数
+//////////7.compare，str1>str2，返回正；str1==str2，返回0；str1<str2,返回负
 
 
-//////////////////////////////////////////    求字符串长度
+
+
+
+
+//////////////////////////////////////////    求字符串长度函数
 //
 ///////////////////    strlen()
 //// 
@@ -116,6 +129,7 @@
 
 
 ///////////////////    strcpy()
+////【字符串拷贝】 
 ////
 //////声明：char *strcpy( char *strDestination, const char *strSource );
 ////
@@ -180,6 +194,7 @@
 
 
 /////////////////////    strcat()
+////【字符串追加】 
 ////
 //////声明：char *strcat( char *strDestination, const char *strSource );
 //// 
@@ -236,6 +251,7 @@
 
 
 /////////////////////    strcmp()
+////【比较字符串】 
 ////
 //////声明：int strcmp( const char *string1, const char *string2 );
 ////
@@ -271,9 +287,9 @@
 // 
 //int main()
 //{
-//	char* p1 = "abcde";
-//	char* p2 = "abc";
-//	char* p3 = "abc";
+//	const char* p1 = "abcde";
+//	const char* p2 = "abc";
+//	const char* p3 = "abc";
 //
 //	int ret = strcmp(p1, p2);
 //	if (ret > 0) {//---------//切记不要用(ret == 1/0/-1)判断大小：当前编译器是这样，但是其他的并不一定，不具有可移植性
@@ -317,7 +333,7 @@
 //// 
 //////strncpy函数将strSource的初始计数字符复制到strDest并返回strDest。
 //////如果count小于或等于strSource的长度，则不会自动向复制的字符串追加空字符。 //【count是几就拷贝几个字符，不补'\0'】
-//////如果count大于strSource的长度，目标字符串将用长度不超过count的空字符填充。//【count大于源字符串长度，则拷贝玩源字符串之后，在目标后边追加'\0'，直到count个】
+//////如果count大于strSource的长度，目标字符串将用长度不超过count的空字符填充。//【count大于源字符串长度，则拷贝完源字符串之后，在目标后边追加'\0'，直到count个】
 //////如果源字符串和目标字符串重叠，则strncpy的行为未定义。
 //
 //#include<assert.h>
@@ -394,7 +410,7 @@
 
 
 ///////////////////////    strncat()
-//////【要点是追加后，结尾有且仅有一个'\0'】
+//////【要点是追加后，还是字符串，结尾有且仅有一个'\0'】
 //// 
 ////
 //////声明：char* strncat(char* strDest, const char* strSource, size_t count);
@@ -474,6 +490,27 @@
 
 
 
+/////////////////////////    strncmp()
+////
+//////声明：int strncmp( const char *string1, const char *string2, size_t count );
+////
+//////strncmp函数按ASCII顺序来比较string1和string2中的前count个字符，并返回指示子字符串之间关系的值。
+////////第一个字符串大于第二个字符串，则返回大于0的数字
+////////第一个字符串等于第二个字符串，则返回0
+////////第一个字符串小于第二个字符串，则返回小于0的数字
+//
+//
+//int main()
+//{
+//	//常量字符串不可修改，但是p1的语法形式不限制p1去改常量字符串，修改时不报语法错误，只是程序崩溃
+//	const char* p1 = "abcdef";//加const，一旦修改会报语法错误，程序更合理
+//	const char* p2 = "abcqwer";
+//
+//	printf("%d\n", strncmp(p1, p2, 3));//比较前三个
+//	printf("%d\n", strncmp(p1, p2, 4));//比较前四个
+//
+//	return 0;
+//}
 
 
 
@@ -481,4 +518,181 @@
 
 
 
-//strncmp()
+
+
+
+
+
+
+//////////////////////////////////////////    字符串查找函数
+
+
+
+/////////////////////    strstr()
+//////【查找子字符串】
+////
+//////声明：char *strstr( const char *string, const char *strCharSet ); //前：被查找的字符串，后：要查找的子字符串
+////
+////
+//////返回值：返回strCharSet在string中第一次出现时，那个子字符串首字符的地址；如果strCharSet指向空字符串，则函数返回string。
+//////        如果strCharSet没有出现在string中则返回NULL。
+//
+//
+//
+//#include<assert.h>
+//
+////////类似于官方库函数《妙》
+//char* my_strstr(const char* p1, const char* p2)
+//{
+//	assert(p1 && p2);
+//	char* s1 = p1;//p1 p2记录寻找子串的起始位置，s1 s2在循环中进行比较
+//	char* s2 = p2;
+//	if (*p2 == '\0') {
+//		return p1;
+//	}
+//	while (*p1)
+//	{
+//		s1 = p1;
+//		s2 = p2;
+//		//找到第一个相同的字符，开始向后一个个比较
+//		while (*s1 && *s2 && (*s1 == *s2))//*s1 *s2找到'\0'，或二者不相等，循环结束
+//		{
+//			s1++;
+//			s2++;
+//		}
+//		//仅有*s2是\0的情况找到了子串
+//		if (*s2 == '\0') {
+//			return p1;
+//		}
+//		//每次循环，p1初始位置+1
+//		p1++;
+//	}
+//	return NULL;
+//}
+////特殊情况：
+//// abbbbcdef , bbc（坑，这种特殊情况决定了要用两种指针，一种记录子串起始位置不轻易改变，一种可在循环中来回改变）
+//// abcdeabc , def
+//// abcde , def
+//
+//
+//
+//int main()
+//{
+//	const char* p1 = "abcdefghi";
+//	const char* p2 = "def";
+//	const char* p3 = "defQ";
+//
+//	////////子字符串存在，返回再p1中对应的【第一个子字符串首字符地址】
+//	char* ret1 = strstr(p1, p2); //defghi
+//	if (ret1 == NULL)
+//		printf("NULL\n");
+//	else puts(ret1);
+//
+//	////////子字符串不存在，返回 NULL
+//	char* ret2 = strstr(p1, p3);//NULL
+//	if (ret2 == NULL)
+//		printf("NULL\n");
+//	else puts(ret2);
+//
+//	////////特殊情况（b重复多次）abbbcdef,bcd
+//	char* ret3 = strstr("abbbcdef", "bcd");//bcdef
+//	if (ret3 == NULL)
+//		printf("NULL\n");
+//	else puts(ret3);
+//
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+/////////////////////////    strtok()
+////【分割字符串】
+////【把字符串中分隔符改为、0，一次只能修改一段，第一次传str，之后都传NULL】
+//
+////声明：char *strtok( char *str, const char *sep );
+//
+// 
+////sep参数是个字符串，定义了用作分隔符的字符集合。 
+////第一个参数指定一个字符串，它包含了0个或多个由sep字符串中的一个或者多个分隔符分割的标记。
+////strtok函数找到str中的下一个标记，并将其用\0结尾，返回一个指向这个标记的指针。（注：strtok函数会改变操作的字符串，所以在使用strtok函数切分的字符串一般是临时拷贝的内容并且可修改。）
+////strtok函数的第一个参数不为NULL，函数将找到str中第一个标记，strtok函数将保存它在字符串中的位置。
+////strtok函数的第一个参数为NULL，函数将在同一个字符串中被保存的位置开始，查找下一个标记。
+////如果字符串中不存在更多的标记，则返回NULL指针。
+//
+//
+//
+////strtok作用：每调用一次，把最近的分隔符改为\0，并保存\0的位置
+////下次调用，传递NULL即可从\0之后把下一个分隔符也改为\0
+
+
+
+char* my_strtok(char* str, const char* sep)
+{
+	static char arr[] = str;
+	while (str[p])
+	{
+		p++;
+	}
+
+}
+
+
+//int main()
+//{
+//	char arr[] = "hhh@baidu.com";
+//	char* p = "@.";
+//
+//	char buf[50] = { 0 };//strtok会修改操作的字符串，所以一般临时拷贝一个来切割
+//	strcpy(buf, arr);
+//	//切割buf中的字符串
+//
+//	char* ret = strtok(buf, p);//hhh\0baidu.com\0
+//	puts(ret);//hhh
+//
+//	ret = strtok(NULL, p);//hhh\0baidu\0com\0
+//	puts(ret);//baidu
+//
+//	ret = strtok(NULL, p);//hhh\0baidu\0com\0
+//	puts(ret);//com
+//
+//	return 0;
+//}
+
+
+
+//int main()
+//{
+//	char arr[] = "hhh@baidu.com";
+//	char* p = "@.";
+//	char buf[50] = { 0 };
+//	strcpy(buf, arr);
+//
+//	char* ret;
+//
+//	////正确用法：
+//	//buf只用调用一次，之后每次都调用NULL，当返回NULL说明不存在更多分隔符----完美契合for(;;)的特性,《巧妙》
+//	for (ret = strtok(buf, p); ret != NULL; ret = strtok(NULL, p))
+//	{
+//		puts(ret);
+//	}
+//	puts("");
+//
+//
+//
+//	char a[] = "114.514.19.19.810";//点分十进制的表示方式
+//	char* p1 = ".";
+//	char* ret1 = NULL;
+//	for (ret1 = strtok(a, p1); ret1 != '\0'; ret1 = strtok(NULL, p1))
+//	{
+//		puts(ret1);
+//	}
+//
+//	return 0;
+//}
