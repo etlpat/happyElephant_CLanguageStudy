@@ -1897,3 +1897,373 @@
 //}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:输入一个字符串，输出反序后的字符串。
+//
+//#include<stdio.h>
+//#include<string.h>
+//
+//char* f(char* start, char* end)
+//{
+//    char* ret = start;
+//    while (start < end)
+//    {
+//        char tmp = *start;
+//        *start = *end;
+//        *end = tmp;
+//        start++;
+//        end--;
+//    }
+//    return ret;
+//}
+//int main(void)
+//{
+//    char arr[50] = { 0 };
+//    gets(arr);
+//    int sz = strlen(arr);
+//    char* a = f(arr, arr + sz - 1);
+//    printf("%s", arr);
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////题目描述:对于给定的一个字符串，统计其中数字字符出现的次数。
+//
+//#include<stdio.h>
+//#include<string.h>
+//#include<ctype.h>
+//int main(void)
+//{
+//	int t;
+//	scanf("%d", &t);
+//	getchar();
+//	while (t--)
+//	{
+//		int n = 0;
+//		char arr[50] = { 0 };
+//		gets(arr);
+//		int i = 0;
+//		for (i = 0; i < strlen(arr); i++)
+//		{
+//			if (isdigit(arr[i]))
+//				n++;
+//		}
+//		printf("%d\n", n);
+//	}
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:输入两个字符串a和b，将b串中的最大字符插入到a串中最小字符后面。
+//
+//#include <stdio.h>
+//#include <string.h>
+//
+//char isbig(char* str)
+//{
+//    char a = str[0];
+//    while (*str++)
+//    {
+//        if (*str > a)
+//        {
+//            a = *str;
+//        }
+//    }
+//    return a;
+//}
+//
+//char* issmall(char* str)
+//{
+//    char a = str[0];
+//    char* pa = str;
+//    while (*str)
+//    {
+//        if (*str < a)
+//        {
+//            a = *str;
+//            pa = str;
+//        }
+//        str++;
+//    }
+//    return pa;
+//}
+//
+//char* f(char* str, char a)
+//{
+//    char* ret = str;
+//    char* pa = issmall(str);
+//    char* p = pa;
+//    int num = strlen(p);
+//    p += num;
+//    while (num--)
+//    {
+//        *p = *(p - 1);
+//        p--;
+//    }
+//    *(pa+1) = a;
+//    return  ret;
+//}
+//
+//int main(void)
+//{
+//    char str1[100] = { 0 };
+//    char str2[100] = { 0 };
+//    gets(str1);
+//    gets(str2);
+//    char a = isbig(str2);
+//    char* p = f(str1, a);
+//    printf("%s", p);
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////题目描述：编写程序，输入字符串s1和s2以及插入位置f，在字符串s1中的指定位置f处插入字符串s2。
+//////如输入"BEIJING"， "123"， 3，则输出:"BEI123JING"。
+// 
+//#include<stdio.h>
+//#include<string.h>
+//
+//char* f(char* dest, char* src, int n)
+//{
+//	char* ret = dest;
+//
+//	char* pa = dest + strlen(dest) + strlen(src) - 1;
+//	char* pb = dest + strlen(dest) - 1;
+//	while (pb >= dest + n)
+//	{
+//		*pa-- = *pb--;
+//	}
+//
+//	strncpy(dest + n, src, strlen(src));
+//	return ret;
+//}
+//
+//int main(void)
+//{
+//	char str1[200] = { 0 };
+//	char str2[100] = { 0 };
+//	gets(str1);
+//	gets(str2);
+//	int n;
+//	scanf("%d", &n);
+//	char* p = f(str1, str2, n);
+//	printf("%s", p);
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////题目描述:输入一段字符(由空格、字母和数字几种组成，保证开头不为空格)，里面有若干个字符串，求这些字符串的长度和，
+//////        并输出最长字符串内容,如果有多个输出最先出现的那个字符串。以stop作为最后输入的字符串。
+//////样例输入：
+//////My name is Amy
+//////My name is Jane
+//////stop
+//////样例输出：
+//////11 name
+//////12 name
+//////提示：
+//////字符串长度不超过100。
+//
+//#include<stdio.h>
+//#include <string.h>
+//int main(void)
+//{
+//	while (1)
+//	{
+//		char a[100] = { 0 };
+//		gets(a);
+//		char* arr = a;
+//		if (strcmp(arr, "stop") == 0)
+//		{
+//			break;
+//		}
+//		char* p = NULL;char* tmp = NULL;
+//		int sum = 0, n = 0, ntmp = 0;
+//		while (*arr)
+//		{
+//			ntmp = 0;
+//			while (*arr && (*arr == ' '))
+//			{
+//				arr++;
+//			}
+//			tmp = arr;
+//
+//			while (*arr && (*arr != ' '))
+//			{
+//				ntmp++;
+//				arr++;
+//			}
+//			sum += ntmp;
+//			if (n < ntmp)
+//			{
+//				n = ntmp;
+//				p = tmp;
+//			}
+//		}
+//		printf("%d ", sum);
+//		for (; *p && *p != ' '; p++)
+//		{
+//			printf("%c", *p);
+//		}
+//		puts("");
+//	}
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////题目描述：输入3行，每行n个字符串，按由小到大的顺序输出
+//////样例输入：
+//////cde
+//////afg
+//////abc
+//////样例输出：
+//////abc
+//////afg
+//////cde
+//
+//#include<stdio.h>
+//#include<string.h>
+//
+//
+//int main(void)
+//{
+//	char arr[3][100] = { 0 };
+//	int i;
+//	for (i = 0; i < 3; i++)
+//		gets(arr[i]);
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	qsort(arr, sz, sizeof(arr[0]), strcmp);
+//	for (i = 0; i < 3; i++)
+//		puts(arr[i]);
+//	return 0;
+//}
+//
+//
+//void swap(char* e1, char* e2, int width)
+//{
+//	int i;
+//	for (i = 0; i < width; i++)
+//	{
+//		char tmp = *(e1 + i);
+//		*(e1 + i) = *(e2 + i);
+//		*(e2 + i) = tmp;
+//	}
+//}
+//
+//void my_qsort(void* arr, int sz, int width, int(*cmp)(const void* p1, const void* p2))
+//{
+//	int i, j;
+//	for (i = 0; i < sz - 1; i++)
+//	{
+//		for (j = 0; j < sz - i - 1; j++)
+//		{
+//			if (cmp(((char*)arr + j * width), ((char*)arr + (j + 1) * width)) > 0)
+//			{
+//				swap(((char*)arr + j * width), ((char*)arr + (j + 1) * width), width);
+//			}
+//		}
+//	}
+//}
+//
+//int main(void)
+//{
+//	char arr[3][100] = { 0 };
+//	int i;
+//	for (i = 0; i < 3; i++)
+//		gets(arr[i]);
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	my_qsort(arr, sz, sizeof(arr[0]), strcmp);
+//	for (i = 0; i < 3; i++)
+//		puts(arr[i]);
+//	return 0;
+//}
