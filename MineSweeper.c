@@ -66,12 +66,15 @@ void update_place(HANDLE handle, short X, short Y);
 
 int left_event(HANDLE handle, short X, short Y);
 
-void middle_event(HANDLE handle,short X, short Y);
+int middle_event(HANDLE handle,short X, short Y);
 
 void right_event(short X, short Y);
 
 int mine_num(short X, short Y);
 
+int have_air();
+
+void pri_mine(HANDLE handle);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +109,7 @@ int main()
 	pri_map();
 	pri_player(handle, player.X, player.Y);
 
+	int num = 0;
 
 	while (1)
 	{
@@ -124,22 +128,41 @@ int main()
 			break;
 
 		case LEFT://点雷
-			left_event(handle, player.X, player.Y);
+			num = left_event(handle, player.X, player.Y);
 			pri_player(handle, player.X, player.Y);
 			break;
 
 		case MIDDLE://点开周围一圈
-			middle_event(handle,player.X, player.Y);
+			num = middle_event(handle,player.X, player.Y);
 			break;
 
 		case RIGHT://标旗
 			right_event(player.X, player.Y);
 			pri_player(handle, player.X, player.Y);
 			break;
-
 		}
 
 		//胜负判定
+		if (num == -1) {
+			break;
+		}
+		else if (have_air() == 0)
+		{
+			num = 1;
+			break;
+		}
+	}
+	//一次游戏循环结束
+	if (num == 1) {
+		Sleep(1000);
+		system("cls");
+		printf("游戏胜利\n");
+	}
+	else {
+		pri_mine(handle);
+		Sleep(3000);
+		system("cls");
+		printf("游戏失败\n");
 	}
 
 
@@ -178,6 +201,25 @@ void pri_player(HANDLE handle, short X, short Y)//打印玩家
 
 
 
+void pri_mine(HANDLE handle)//游戏失败后打印所有地雷
+{
+	int i = 1, j = 1;
+	for (i = 1; i <= ROW; i++)
+	{
+		for (j = 1; j <= COL; j++)
+		{
+			if (map[i][j] == MINE)
+			{
+				COORD tmp = { 2 * (j - 1), i - 1 };
+				SetConsoleCursorPosition(handle, tmp);
+				printf("%s", map_graph[FLAG_AND_MINE]);
+			}
+		}
+	}
+}
+
+
+
 void init_map()//初始化地图+埋雷
 {
 	int i, x, y;
@@ -204,6 +246,23 @@ void update_place(HANDLE handle, short X, short Y)//地块更新,把枚举类型
 	SetConsoleCursorPosition(handle, tmp);
 	printf("%s", map_graph[map[Y][X]]);
 	//这里把 map[Y][X] 枚举对应的值放入与之对应的 map_graph[] 数组中
+}
+
+
+int have_air()//地图上有AIR为真（1），无AIR为假（0），用于胜负判定
+{
+	int i, j;
+	for (i = 1; i <= ROW; i++)
+	{
+		for (j = 1; j <= COL; j++)
+		{
+			if (map[i][j] == AIR)
+			{
+				return 1;
+			}
+		}
+	}
+	return 0;
 }
 
 
@@ -359,31 +418,36 @@ int flag_num(short X, short Y)//统计并返回数周围8格的旗数
 
 
 //(X/x)中键按下后的事件
-void middle_event(HANDLE handle,short X, short Y)//（若本坐标是数字，且周围8格旗数==数字，点开周围8格）
+int middle_event(HANDLE handle, short X, short Y)//（若本坐标是数字，且周围8格旗数==数字，点开周围8格）
 {
-	if (map[Y][X] >= ZERO && map[Y][X] <= EIGHT)
+	if (map[Y][X] >= ONE && map[Y][X] <= EIGHT && (flag_num(X, Y) == map[Y][X] - ZERO))//假如是数字且数字等于旗数
 	{
-		int num = flag_num(X, Y);
-		if (num == map[Y][X] - ZERO)
+		if (map[Y - 1][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y - 1 >= 1 && Y - 1 <= ROW)//点开周围一圈
+			left_event(handle, X - 1, Y - 1);
+		if (map[Y][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y >= 1 && Y <= ROW)
+			left_event(handle, X - 1, Y);
+		if (map[Y + 1][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
+			left_event(handle, X - 1, Y + 1);
+		if (map[Y - 1][X] <= MINE && X >= 1 && X <= COL && Y - 1 >= 1 && Y - 1 <= ROW)
+			left_event(handle, X, Y - 1);
+		if (map[Y + 1][X] <= MINE && X >= 1 && X <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
+			left_event(handle, X, Y + 1);
+		if (map[Y - 1][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y - 1 >= 1 && Y - 1 <= ROW)
+			left_event(handle, X + 1, Y - 1);
+		if (map[Y][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y >= 1 && Y <= ROW)
+			left_event(handle, X + 1, Y);
+		if (map[Y + 1][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
+			left_event(handle, X + 1, Y + 1);
+
+
+		if (map[Y - 1][X - 1] == MINE || map[Y - 1][X] == MINE || map[Y - 1][X + 1] == MINE || //假如周围一圈有雷
+			map[Y][X - 1] == MINE || map[Y][X + 1] == MINE ||
+			map[Y + 1][X - 1] == MINE || map[Y + 1][X] == MINE || map[Y + 1][X + 1] == MINE)
 		{
-			if (map[Y - 1][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y - 1 >= 1 && Y - 1 <= ROW)
-				left_event(handle, X - 1, Y - 1);
-			if (map[Y][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y >= 1 && Y <= ROW)
-				left_event(handle, X - 1, Y);
-			if (map[Y + 1][X - 1] <= MINE && X - 1 >= 1 && X - 1 <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
-				left_event(handle, X - 1, Y + 1);
-			if (map[Y - 1][X] <= MINE && X >= 1 && X <= COL && Y - 1 >= 1 && Y - 1 <= ROW)
-				left_event(handle, X, Y - 1);
-			if (map[Y + 1][X] <= MINE && X >= 1 && X <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
-				left_event(handle, X, Y + 1);
-			if (map[Y - 1][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y - 1 >= 1 && Y - 1 <= ROW)
-				left_event(handle, X + 1, Y - 1);
-			if (map[Y][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y >= 1 && Y <= ROW)
-				left_event(handle, X + 1, Y);
-			if (map[Y + 1][X + 1] <= MINE && X + 1 >= 1 && X + 1 <= COL && Y + 1 >= 1 && Y + 1 <= ROW)
-				left_event(handle, X + 1, Y + 1);
+			return -1;
 		}
 	}
+	return 0;
 }
 
 
