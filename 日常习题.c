@@ -2267,3 +2267,148 @@
 //		puts(arr[i]);
 //	return 0;
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////本关任务:将十个数进行从大到小的顺序进行排列。
+//
+//#include<stdio.h>
+//#include<stdlib.h>
+//int cmp_int(const void* p1, const void* p2)
+//{
+//    return *(int*)p2 - *(int*)p1;
+//}
+//int main(void)
+//{
+//    int i = 0;
+//    int arr[10] = { 0 };
+//    for (i = 0; i < 10; i++)
+//    {
+//        scanf("%d", arr + i);
+//    }
+//    qsort(arr, sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]), cmp_int);
+//    for (i = 0; i < 10; i++)
+//    {
+//        printf("%d ", arr[i]);
+//    }
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:找出具有m行n列二维数组Array的“鞍点”，即该位置上的元素在该行上最大，在该列上最小，其中1<=m,n<=10。
+//#include<stdio.h>
+//int main()
+//{
+//    int arr[100][100];
+//    int m, n;
+//    scanf("%d %d", &m, &n);
+//    int i, j;
+//    for (i = 0; i < m; i++)
+//    {
+//        for (j = 0; j < n; j++)
+//        {
+//            scanf("%d", &arr[i][j]);
+//        }
+//    }
+//    for (i = 0; i < m; i++)
+//    {
+//        int max = 0, row = 0, col = 0;
+//        for (j = 0; j < n; j++)
+//        {
+//            if (arr[i][j] > max)
+//            {
+//                max = arr[i][j];
+//                row = i;
+//                col = j;
+//            }
+//        }
+//        int t = 1, ii = 0;
+//        for (ii = 0; ii < m; ii++)
+//        {
+//            if (arr[ii][col] < max)
+//            {
+//                t = 0;
+//                break;
+//            }
+//        }
+//        if (t)
+//        {
+//            printf("Array[%d][%d]=%d", row, col, max);
+//            return 0;
+//        }
+//
+//    }
+//    printf("None");
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:输入10个互不相同的整数并保存在数组中，找到该最大元素并删除它，输出删除后的数组
+//#include<stdio.h>
+//#include<string.h>
+//int main()
+//{
+//    int arr[10] = { 0 };
+//    int arr1[9] = { 0 };
+//    int i;
+//
+//    for (i = 0; i < 10; i++)
+//        scanf("%d", &arr[i]);
+//    int max = arr[0], x = 0;
+//    for (i = 1; i < 10; i++)
+//    {
+//        if (arr[i] > max)
+//        {
+//            max = arr[i];
+//            x = i;
+//        }
+//    }
+//    while (x < 10)
+//    {
+//        arr[x] = arr[x + 1];
+//        x++;
+//    }
+//    memcpy(arr1, arr, sizeof(arr1));
+//    for (int i = 0; i < 9; i++)
+//    {
+//        printf("%d ", arr1[i]);
+//    }
+//    return 0;
+//}
