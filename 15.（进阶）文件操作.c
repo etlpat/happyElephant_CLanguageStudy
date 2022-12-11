@@ -1,7 +1,7 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-#include<stdio.h>
-#include<string.h>
-#include<errno.h>
+//#define _CRT_SECURE_NO_WARNINGS 1
+//#include<stdio.h>
+//#include<string.h>
+//#include<errno.h>
 
 
 
@@ -17,6 +17,105 @@
 //// 文件的顺序读写
 //// 文件的随机读写
 //// 文件的结束判定
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////本章函数
+
+//fopen()
+//FILE* fopen(const char* filename, const char* mode);
+//打开文件，创建文件信息区(FILE结构体)，返回结构体区的指针(FILE*)
+
+//fclose() 
+//int fclose( FILE *stream );
+//关闭文件流 
+
+//fputc()
+//将字符写入流
+//int fputc( int c, FILE *stream );
+
+//fgetc()
+//从流中读取一个字符
+//int fgetc( FILE *stream );
+
+//fputs()
+//将字符串写入流(写入一行)
+//int fputs( const char *string, FILE *stream );
+
+//fgets()
+//从流中获取一个字符串(获取一行)
+//char *fgets( char *string, int n, FILE *stream );
+
+//fprintf()
+//将格式化数据打印到流中
+//int fprintf( FILE *stream, const char *format [, argument ]...);
+
+//fscanf()
+//从流中读取格式化的数据
+//int fscanf( FILE *stream, const char *format [, argument ]... );
+
+//sprintf()
+//将格式化的数据写入字符串
+//int sprintf( char *buffer, const char *format [, argument] ... );
+
+//sscanf()
+//从字符串中读取格式化的数据
+//int sscanf( const char *buffer, const char *format [, argument ] ... );
+
+//fwrite()
+//将数据以二进制形式写入文件流
+//size_t fwrite( const void *buffer, size_t size, size_t count, FILE *stream );
+
+//fread()
+//从文件流中读取二进制形式数据
+//size_t fread( void *buffer, size_t size, size_t count, FILE *stream );
+
+//fseek()
+//将文件指针移动到指定位置(以文件指针的当前位置为起点,根据偏移量来调整文件指针)
+//int fseek( FILE *stream, long offset, int origin );
+
+//ftell()
+//返回文件指针当前位置相对于起始位置的偏移量
+//long ftell( FILE *stream );
+
+//rewind()
+//让文件指针的位置回到文件的起始位置
+//void rewind( FILE *stream );
+
+//perror()
+//打印错误信息
+//void perror( const char *string );
+
+//feof()
+//判断读取位置是否在结尾
+//int feof( FILE *stream );
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
