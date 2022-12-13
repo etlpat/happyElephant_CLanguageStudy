@@ -1,5 +1,6 @@
 //#define _CRT_SECURE_NO_WARNINGS 1
 //#include<stdio.h>
+//#include<string.h>
 
  
 
@@ -525,6 +526,50 @@
 
 
 
+//////////位段【题目】 ：以下输出结果是多少？
+//
+//int main()
+//{
+//	unsigned char puc[4];
+//	struct tagPIM
+//	{
+//		unsigned char ucPim1;
+//		unsigned char ucData0 : 1;
+//		unsigned char ucData1 : 2;
+//		unsigned char ucData2 : 3;
+//	}*pstPinData;
+//	pstPinData = (struct tagPIM*)puc;
+//	memset(puc, 0, 4);
+//	pstPinData->ucPim1 = 2;
+//	pstPinData->ucData0 = 3;//11 -> 1
+//	pstPinData->ucData1 = 4;//100 -> 00   }-> 00|101|00|1
+//	pstPinData->ucData2 = 5;//101 -> 101
+//
+//	printf("%02x %02x %02x %02x", puc[0], puc[1], puc[2], puc[3]);
+//	return 0;
+//}
+//
+//
+////数组puc内存为 0000000 00000000 00000000 00000000
+////pstPinData = (struct tagPIM*)puc;，把数组指针pstPinData放到了puc的位置
+////之后对pstPinData内容进行赋值，同时改变了puc位置的值
+////0000010 00|101|00|1 00000000 00000000
+////输出 02 29 00 00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -599,6 +644,38 @@
 //////3.防止命名污染（封装）
 //////4，便于调试
 //////5使用方便，一次可以定义多个常量
+
+
+
+
+
+
+
+
+
+
+//////////【题目】1.下面代码结果是？
+//enum E
+//{
+//	X1,//0
+//	Y1,//1
+//	Z1 = 255,//255
+//	A1,//256
+//	B1//257
+//};
+//int main()
+//{
+//	enum E A = Y1;
+//	enum E B = B1;
+//	printf("%d %d\n", A, B);//1,257
+//	return 0;
+//}
+
+
+
+
+
+
 
 
 
@@ -738,3 +815,52 @@
 
 
 
+
+
+
+
+
+
+
+
+//////////【题目】1.下面代码结果是？
+//
+//union Un
+//{
+//	short s[7];
+//	int n;
+//};
+//int main()
+//{
+//	printf("%d\n", sizeof(union Un));//16
+//	return 0;
+//}
+//
+//////内存至少是14，最大对齐数是16，使用内存为16字节
+
+
+
+
+
+
+
+
+
+////////////【题目】2.下面代码结果是？
+//
+//int main()
+//{
+//	union
+//	{
+//		short k;
+//		char i[2];
+//	}*s, a;
+//	s = &a;
+//	s->i[0] = 0x39;
+//	s->i[1] = 0x38;
+//	printf("%x\n", a.k);//3839
+//	return 0;
+//}
+//
+////// 赋值后内存为 0x39 38
+////// 小端存储，short结果为 0x3839

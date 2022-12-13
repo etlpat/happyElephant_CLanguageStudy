@@ -1,8 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<errno.h>
+//#define _CRT_SECURE_NO_WARNINGS 1
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<string.h>
+//#include<errno.h>
 
 
 
@@ -267,6 +267,7 @@
 ////// 声明：void *realloc( void *memblock, size_t size );
 ////// [memblock] 是要调整的内存块的地址
 ////// [size]     是调整之后内存的新大小
+// 
 ////// [返回值]   为调整之后的内存起始位置
 //
 //
