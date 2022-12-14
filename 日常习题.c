@@ -2420,3 +2420,269 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+////本关任务：编写函数求区间[200,3000]中所有的回文数，回文数是正读和反读都是一样的数。如525, 1551
+//
+//#include<stdio.h>
+//
+//int f(int i)
+//{
+//    int a = i;
+//    int n = 1;
+//    int sum = 0;
+//    int t = 1;
+//    while (a /= 10)
+//    {
+//        n *= 10;
+//    }
+//    while (n)
+//    {
+//        sum += (i / n)*t;
+//        i %= n;
+//        n /= 10;
+//        t *= 10;
+//    }
+//    return sum;
+//}
+//
+//int main()
+//{
+//    int i;
+//    int n = 0;
+//    for (i = 200; i <= 3000; i++)
+//    {
+//        n = f(i);
+//        if (n==i)
+//        {
+//            printf("%d\n", i);
+//        }
+//    }
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:有如下表达式 s = 1 + 1 / 3 + (1 * 2) / (3 * 5) + (1 * 2 * 3) / (3 * 5 * 7) + .... + (1 * 2 * 3 * .... * n) / (3 * 5 * 7 * ... * (2 * n + 1))。
+//
+//#include<stdio.h>
+//
+//double f(int n)
+//{
+//    double up = 1.0, down = 1.0, sum = 1.0; int i;
+//    for (i = 1; i <= n; i++)
+//    {
+//        up *= i;
+//        down *= 2 * i + 1.0;
+//        sum += up / down;
+//    }
+//    return sum;
+//}
+//
+//int main(void)
+//{
+//
+//    int n;
+//    scanf("%d", &n);
+//    double a = f(n);
+//    printf("%.10lf", a);
+//
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:求Sn=1!+2!+3!+4!+5!+…+n!之值，其中n是一个数字。
+//
+//#include<stdio.h>
+//long long f(int a)
+//{
+//    long long sum = 0, t = 1;
+//    int i;
+//    for (i = 1; i <= a; i++)
+//    {
+//        t *= i;
+//        sum += t;
+//    }
+//    return sum;
+//}
+//int main(void)
+//{
+//    int n;
+//    scanf("%d", &n);
+//    long long a = f(n);
+//    printf("%lld", a);
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:两个不同的自然数A和B，如果整数A的全部因子(包括1，不包括A本身)之和等于B；且整数B的全部因子(包括1，不包括B本身)之和等于A，则将整数A和B称为亲密数。求3000以内的全部亲密数。
+//
+//#include<stdio.h>
+//
+//int f(int i)
+//{
+//    int sum = 0, t = 1;
+//    for (t = 1; t < i; t++)
+//    {
+//        if (!(i % t))
+//        {
+//            sum += t;
+//        }
+//    }
+//    return sum;
+//}
+//
+//int main()
+//{
+//    int n = 3000;
+//    int i, j;
+//    for (i = 2; i <= n; i++)
+//    {
+//        j = f(i);
+//        if ((i < j) && (j < n) && (i == f(j)))
+//        {
+//            printf("(%d,%d)", i, j);
+//        }
+//    }
+//    return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////题目描述:写两个函数，分别求两个整数的最大公约数和最小公倍数，用主函数调用这两个函数，并输出结果。两个整数由键盘输入。
+//
+//#include<stdio.h>
+//
+////编写最大公约数GCD函数
+//
+//long long f1(long long x, long long y)
+//{
+//	if (x < y)
+//	{
+//		long long tmp = y;
+//		y = x;
+//		x = tmp;
+//	}
+//	for (long long i = y; i >= 1; i--)
+//	{
+//		if (x % i == 0 && y % i == 0)
+//		{
+//			return i;
+//		}
+//	}
+//}
+//
+////编写最小公倍数LCM函数
+//long long f2(long long x, long long y)
+//{
+//	long long i = 1;
+//	while (x * i % y)
+//	{
+//		i++;
+//	}
+//	return x * i;
+//}
+//
+//
+//int main()
+//{
+//	long long a, b;
+//	scanf("%lld %lld", &a, &b);
+//	if (a <= 0 || b <= 0)
+//	{
+//		printf("Input Error");
+//		return 0;
+//	}
+//	long long t1 = f1(a, b);
+//	long long t2 = f2(a, b);
+//	printf("%lld %lld", t1, t2);
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
