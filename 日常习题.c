@@ -2685,4 +2685,51 @@
 
 
 
+//////对比getchar()与_getch()
+//#include<conio.h>
+//int main()
+//{
+//	char a = getchar();
+//	char b = _getch();//无回显，且输入字符后不用敲回车
+//
+//	puts("");
+//	putchar(a);
+//	puts("");
+//	putchar(b);
+//
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+////////_kbhit()，判断是否敲键盘，若敲了键盘则返回1
+//#include<conio.h>
+//#include<time.h>
+//int main()
+//{
+//	while(1)
+//	{ 
+//		if (_kbhit())
+//		{
+//			char b = _getch();//无回显，且输入字符后不用敲回车
+//			puts("b");
+//		}
+//		else {
+//			puts("1");
+//		}
+//		Sleep(1000);
+//	}
+//	return 0;
+//}
+
+
 
