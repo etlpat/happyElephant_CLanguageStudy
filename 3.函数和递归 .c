@@ -53,7 +53,7 @@
 
 
 ////////                        库函数    memset
-////////          memset----memory set(内存（记忆）设置)
+////////          memset----memory set(内存设置)
 ////////          将缓冲区设置为指定的字符
 ////////          void *memset( void *dest, int c, size_t count );
 ////////          The memset function sets the first count bytes of dest to the character c.
