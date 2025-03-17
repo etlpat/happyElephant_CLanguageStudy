@@ -1,0 +1,3 @@
+﻿  吉米.c
+C:\code\game三子棋\game三子棋\吉米.c(220): warning C4715: “start”: 不是所有的控件路径都返回值
+  game三子棋.vcxproj -> C:\code\game三子棋\x64\Debug\game三子棋.exe
