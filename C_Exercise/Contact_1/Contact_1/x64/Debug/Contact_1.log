@@ -1,0 +1,9 @@
+﻿  contact_fun.c
+C:\Users\lenovo\source\repos\Contact_1\Contact_1\contact_fun.c(119,9): warning C4477: “scanf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const char *”
+C:\Users\lenovo\source\repos\Contact_1\Contact_1\contact_fun.c(121,9): warning C4477: “scanf”: 格式字符串“%d”需要类型“int *”的参数，但可变参数 1 拥有了类型“const int *”
+C:\Users\lenovo\source\repos\Contact_1\Contact_1\contact_fun.c(123,9): warning C4477: “scanf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const char *”
+C:\Users\lenovo\source\repos\Contact_1\Contact_1\contact_fun.c(125,9): warning C4477: “scanf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const char *”
+C:\Users\lenovo\source\repos\Contact_1\Contact_1\contact_fun.c(127,9): warning C4477: “scanf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const char *”
+  contact_test.c
+  正在生成代码...
+  Contact_1.vcxproj -> C:\Users\lenovo\source\repos\Contact_1\x64\Debug\Contact_1.exe

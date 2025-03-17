@@ -1,0 +1,4 @@
+﻿  Gluttonous_Snake.c
+C:\Users\lenovo\source\repos\Gluttonous Snake\Gluttonous Snake\Gluttonous_Snake.c(308,20): warning C4305: “*=”: 从“double”到“float”截断
+C:\Users\lenovo\source\repos\Gluttonous Snake\Gluttonous Snake\Gluttonous_Snake.c(323,9): warning C4244: “函数”: 从“float”转换到“DWORD”，可能丢失数据
+  Gluttonous Snake.vcxproj -> C:\Users\lenovo\source\repos\Gluttonous Snake\x64\Debug\Gluttonous Snake.exe
