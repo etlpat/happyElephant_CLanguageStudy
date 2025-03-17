@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="8.实用调试技巧.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="9.（进阶）数据的存储.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="10.（进阶）指针.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Leetcode习题.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\0.C概况笔记.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\1.初识基础.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\2.选择循环.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\3.函数和递归 .c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\4.数组.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\5.操作符.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\6.指针.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\7.结构体.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\happy-elephant\日常习题.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="11.指针笔试面试题目.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="库函数.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="12.（进阶）字符串和内存函数.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="13.（进阶）自定义类型详解（结构体+枚举+联合）.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="14.（进阶）动态内存管理.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="15.（进阶）文件操作.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="未填完的坑.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="16.（进阶）程序环境和预处理.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="草稿.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

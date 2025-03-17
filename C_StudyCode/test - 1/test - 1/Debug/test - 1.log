@@ -1,0 +1,18 @@
+﻿  0.C概况笔记.c
+  1.初识基础.c
+  2.选择循环.c
+  3.函数和递归 .c
+  4.数组.c
+  5.操作符.c
+  6.指针.c
+  7.结构体.c
+  日常习题.c
+  10.（进阶）指针.c
+  11.指针笔试面试题目.c
+C:\Users\lenovo\source\repos\test - 1\test - 1\11.指针笔试面试题目.c(190,9): warning C4477: “printf”: 格式字符串“%p”需要类型“void *”的参数，但可变参数 1 拥有了类型“unsigned long”
+  8.实用调试技巧.c
+C:\Users\lenovo\source\repos\test - 1\test - 1\8.实用调试技巧.c(1,1): warning C4828: 文件包含在偏移 0x1b00 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+  9.（进阶）数据的存储.c
+  Leetcode习题.c
+  正在生成代码...
+  test - 1.vcxproj -> C:\Users\lenovo\source\repos\test - 1\Debug\test - 1.exe
